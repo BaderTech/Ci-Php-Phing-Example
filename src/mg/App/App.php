@@ -28,6 +28,6 @@ class App
      */
     public function run()
     {
-        return 43;
+        return 45;
     }
 }
