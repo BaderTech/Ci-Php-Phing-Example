@@ -6,6 +6,15 @@
     <mkdir dir="${dir.tmp}"/>
   </target>
   
+  <target name="qa" description="Lance les outils d'analyse">
+  </target>
+  
+  <target name="qa" description="Lance les outils d'analyse">
+    <phingcall target="premier-outil" />
+    <phingcall target="second-outil" />
+    <phingcall target="troisime-outil" />
+</target>
+    
 <target name="clean" description="Vide les répertoires d'artefacts">
     <delete dir="${project.basedir}/build/api" />
     <delete dir="${project.basedir}/build/code-browser" />
@@ -260,4 +269,16 @@
   <target name="build" depends="prepare, test"/>
   <target name="test" depends="prepare, phpunit"/>
   <target name="report" depends="build, phploc, phpdoc, phpdepend, phpcs, phpmd, phpcpd"/>
+  
+  <target name="qa" description="Lance les outils d'analyse">
+    <phingcall target="pdepend" />
+    <phingcall target="phpmd" />
+    <phingcall target="phpcpd" />
+    <phingcall target="phploc" />
+    <phingcall target="phpcs" />
+    <phingcall target="phpdoc" />
+    <phingcall target="phpunit" />
+    <phingcall target="phpcb" />
+    
+</target>
 </project>
