@@ -17,8 +17,8 @@
 		<mkdir dir="${basedir}/build/pdepend" />
 	</target>
 
-	<target name="phpunit" description="Run unit tests using PHPUnit and generates junit.xml and clover.xml">
-		<exec logoutput="true" command="phpunit --configuration=phpunit.xml" />
+	<target name="phpunit">
+    <exec logoutput="true" dir="${project.basedir}/test" command="phpunit" escape="false" />
 	</target>
 
 	<target name="run_parallel_tasks">
