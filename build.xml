@@ -29,95 +29,38 @@
     <mkdir dir="${project.basedir}/build/pdepend" />
 </target>
 
-  <target name="phpdepend">
-    <exec command="${phing} _phpdepend" passthru="true"/>
-  </target>
-  <target name="_phpdepend">
-    <mkdir dir="${phpdepend.output.xml.dir}"/>
-    <mkdir dir="${phpdepend.output.html.dir}"/>
-    <exec
-      command="${phpdepend.exec} ${phpdepend.args}"
-      dir="${project.basedir}"
-      passthru="true"
-    />
-    <xslt
-      file="${phpdepend.output.xml.file}"
-      tofile="${phpdepend.output.html.file}"
-      style="${phpdepend.style}"
-    />
-  </target>
+  <target name="pdepend">
+    <phpdepend file="${project.basedir}/${source}/www">
+        <logger type="jdepend-xml" outfile="${project.basedir}/build/logs/jdepend.xml" />
+        <logger type="jdepend-chart" outfile="${project.basedir}/build/pdepend/dependencies.svg" />
+        <logger type="overview-pyramid" outfile="${project.basedir}/build/pdepend/overview-pyramid.svg" />
+    </phpdepend>
+</target>
 
   <target name="phpcs">
-    <exec command="${phing} _phpcs" passthru="true"/>
-  </target>
-  <target name="_phpcs">
-    <mkdir dir="${phpcs.output.xml.dir}"/>
-    <mkdir dir="${phpcs.output.html.dir}"/>
-    <exec
-      command="${phpcs.exec} ${phpcs.args}"
-      dir="${project.basedir}"
-      passthru="true"
-    />
-    <xslt
-      file="${phpcs.output.xml.file}"
-      tofile="${phpcs.output.html.file}"
-      style="${phpcs.style}"
-    />
-  </target>
+    <phpcodesniffer standard="Zend">
+        <fileset dir="${project.basedir}/${source}/www">
+            <include name="**/*.php"/>
+        </fileset>
+        <formatter type="checkstyle" outfile="${project.basedir}/build/logs/checkstyle.xml"/>
+    </phpcodesniffer>
+</target>
 
   <target name="phpunit">
-    <exec command="${phing} _phpunit" passthru="true"/>
-  </target>
-  <target name="_phpunit">
-    <mkdir dir="${phpunit.output.xml.dir}"/>
-    <mkdir dir="${phpunit.output.html.dir}"/>
-    <exec
-      command="${phpunit.exec} ${phpunit.args}"
-      dir="${project.basedir}/test"
-      passthru="true"
-    />
-    <xslt
-      file="${phpunit.output.xml.file}"
-      tofile="${junit.output.xml.file}"
-      style="${junit.style}"
-    />
-  </target>
+    <exec logoutput="true" dir="${project.basedir}/${source}/tests" command="phpunit" escape="false" />
+</target>
 
   <target name="phpmd">
-    <exec command="${phing} _phpmd" passthru="true"/>
-  </target>
-  <target name="_phpmd">
-    <mkdir dir="${phpmd.output.xml.dir}"/>
-    <mkdir dir="${phpmd.output.html.dir}"/>
-    <exec
-      command="${phpmd.exec} ${phpmd.args}"
-      dir="${project.basedir}"
-      passthru="true"
-    />
-    <xslt
-      file="${phpmd.output.xml.file}"
-      tofile="${phpmd.output.html.file}"
-      style="${phpmd.style}"
-    />
-  </target>
+    <phpmd file="${project.basedir}/${source}/www">
+        <formatter type="xml" outfile="${project.basedir}/build/phpmd.xml" />
+    </phpmd>
+</target>
 
   <target name="phpcpd">
-    <exec command="${phing} _phpcpd" passthru="true"/>
-  </target>
-  <target name="_phpcpd">
-    <mkdir dir="${phpcpd.output.xml.dir}"/>
-    <mkdir dir="${phpcpd.output.html.dir}"/>
-    <exec
-      command="${phpcpd.exec} ${phpcpd.args}"
-      dir="${project.basedir}"
-      passthru="true"
-    />
-    <xslt
-      file="${phpcpd.output.xml.file}"
-      tofile="${phpcpd.output.html.file}"
-      style="${phpcpd.style}"
-    />
-  </target>
+    <phpcpd file="${project.basedir}/${source}/www">
+        <formatter type="pmd" outfile="${project.basedir}/build/logs/pmd-cpd.xml"/>
+    </phpcpd>
+</target>
 
   <target name="phpdoc">
     <exec command="${phing} _phpdoc" passthru="true"/>
