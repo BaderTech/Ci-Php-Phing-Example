@@ -40,7 +40,7 @@
 
   <target name="phpcs">
     <phpcodesniffer standard="Zend">
-        <fileset dir="${project.basedir}/${source}/www">
+        <fileset dir="${project.basedir}/App">
             <include name="**/*.php"/>
         </fileset>
         <formatter type="checkstyle" outfile="${project.basedir}/build/logs/checkstyle.xml"/>
@@ -66,13 +66,13 @@
   </target>
 
   <target name="phpmd">
-    <phpmd file="${project.basedir}/${source}/www">
+    <phpmd file="${project.basedir}/App">
         <formatter type="xml" outfile="${project.basedir}/build/phpmd.xml" />
     </phpmd>
 </target>
 
   <target name="phpcpd">
-    <phpcpd file="${project.basedir}/${source}/www">
+    <phpcpd file="${project.basedir}/App">
         <formatter type="pmd" outfile="${project.basedir}/build/logs/pmd-cpd.xml"/>
     </phpcpd>
 </target>
