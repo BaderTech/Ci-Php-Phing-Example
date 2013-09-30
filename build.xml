@@ -29,12 +29,13 @@
     <mkdir dir="${project.basedir}/build/pdepend" />
 </target>
 
-  <target name="pdepend">
-    <phpdepend file="${project.basedir}/${source}/www">
-        <logger type="jdepend-xml" outfile="${project.basedir}/build/logs/jdepend.xml" />
-        <logger type="jdepend-chart" outfile="${project.basedir}/build/pdepend/dependencies.svg" />
-        <logger type="overview-pyramid" outfile="${project.basedir}/build/pdepend/overview-pyramid.svg" />
-    </phpdepend>
+<target name="pdepend" description="Calculate software metrics using PHP_Depend">
+    <exec executable="pdepend">
+    <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml"/>
+    <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg"/>
+    <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg"/>
+    <arg path="${basedir}/src"/>
+    </exec>
 </target>
 
   <target name="phpcs">
